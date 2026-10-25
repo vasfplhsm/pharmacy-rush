@@ -1,0 +1,29 @@
+{
+  "name": "pharmacy-rush-fpl-hsm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c cyan,magenta \"npm run dev -w @pharmacy/server\" \"npm run dev -w @pharmacy/client\"",
+    "build": "npm run typecheck && npm run build -w @pharmacy/server && npm run build -w @pharmacy/client",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "start": "npm run start -w @pharmacy/server"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@types/node": "24.10.1",
+    "concurrently": "9.2.1",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "vitest": "5.0.5"
+  }
+}
