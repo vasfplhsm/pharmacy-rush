@@ -1,0 +1,17 @@
+# One free Node service hosts both the game and its Colyseus WebSocket server.
+services:
+  - type: web
+    name: pharmacy-rush
+    runtime: node
+    region: singapore
+    plan: free
+    numInstances: 1
+    branch: main
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production

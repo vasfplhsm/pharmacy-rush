@@ -4,6 +4,14 @@ A cooperative browser game for one to four players. Run a cheerful, fictional ou
 
 This is an original prototype inspired by cooperative time-management games. Its map, characters, packages, and visual effects are created for this project. It uses no real patient information, prescriptions, medication doses, or clinical advice. Mintora, Coralia, Sunberry, and Blueleaf are fictional game products. The setting is a fictionalized tribute to Farmasi Pesakit Luar, Hospital Seri Manjung, Perak, Malaysia; this project is not an official hospital application.
 
+## Host it online for free
+
+Use **Render** for a single Node Web Service in Singapore. The built game and its multiplayer server share one HTTPS URL.
+
+**[Deploy to Render](https://render.com/deploy?repo=https://github.com/vasfplhsm/pharmacy-rush)** · [Step-by-step hosting guide](docs/DEPLOYING.md)
+
+The repository includes `render.yaml` with a free plan and no required secrets. You need a Render account and access to this GitHub repository. Free instances can sleep when idle; a restart clears temporary rooms. Review current free-plan terms before creating the service. A live game URL is assigned only after deployment succeeds.
+
 ## Start on a Mac
 
 An Apple Silicon MacBook with 16 GB RAM is sufficient. You need a current desktop browser, a terminal, and **Node.js 24 LTS** with npm. Node 22.12 or newer is the minimum supported version. No accounts, database, Docker, or paid services are needed.
@@ -110,9 +118,10 @@ Run these from the repository root:
 | `npm run build` | Compile the server and bundle the browser client |
 | `npm run test` | Run the Vitest logic/server tests |
 | `npm run test:browser` | Run the Playwright browser smoke tests |
-| `npm start` | Run the compiled game server after building |
+| `npm start` | Serve the built game and multiplayer server on one port |
+| `npm run test:production` | Build and run browser scenarios against the single-service production setup |
 
-The frontend build is written to `apps/client/dist`; the compiled server is under `apps/server/dist`. `npm start` runs the server, so serve the frontend build separately when testing production hosting. A production build succeeding is not evidence that a deployment has been configured.
+The frontend build is written to `apps/client/dist`; the compiled server is under `apps/server/dist`. `npm start` serves both the built frontend and the multiplayer server from one port. Locally, its default port is 2567; a host can supply `PORT`. A production build succeeding is not evidence that a deployment has been configured.
 
 ### Tests
 

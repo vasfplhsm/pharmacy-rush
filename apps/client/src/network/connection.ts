@@ -12,7 +12,10 @@ export class Connection {
   onFeedback: (text:string,kind:string)=>void = ()=>{};
   private leaving = false;
   constructor() {
-    const endpoint = import.meta.env.VITE_SERVER_URL || `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.hostname}:2567`;
+    const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    // Vite uses a separate server in development; production is served by Colyseus.
+    const host = import.meta.env.DEV ? `${location.hostname}:2567` : location.host;
+    const endpoint = import.meta.env.VITE_SERVER_URL || `${protocol}//${host}`;
     this.client = new Client(endpoint);
   }
   get state():GameView|undefined { return this.room?.state; }

@@ -1,4 +1,6 @@
 import {Server} from '@colyseus/core';
+import express from 'express';
+import {fileURLToPath} from 'node:url';
 import {WebSocketTransport} from '@colyseus/ws-transport';
 import {PharmacyRoom} from './rooms/PharmacyRoom.js';
 const server=new Server({
@@ -6,6 +8,10 @@ const server=new Server({
   greet:false,
   express:app=>{
     app.get('/health',(_req,res)=>res.json({ok:true,game:'Pharmacy Rush',version:'0.1.0'}));
+    // The production build and multiplayer server share one HTTP/WebSocket origin.
+    // This path works from both src/index.ts and the bundled dist/index.js.
+    const clientDist=fileURLToPath(new URL('../../client/dist/',import.meta.url));
+    app.use(express.static(clientDist));
   },
 });
 server.define('pharmacy',PharmacyRoom).filterBy(['code']);

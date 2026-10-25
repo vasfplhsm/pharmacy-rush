@@ -24,3 +24,9 @@ Issues found during development were corrected and affected checks rerun: schema
 Not yet verified: physical mobile devices, Safari, execution on an actual Apple Silicon Mac, Internet latency/packet loss, and public hosting. Rooms are in memory and do not survive a server restart. Production hosting/TLS is a separate deployment task.
 
 Screenshots from the latest browser suite are generated under the ignored `test-results/` directory. See [TESTING.md](TESTING.md) for repeatable commands and remaining manual checks.
+
+## Render hosting preparation
+
+The application now serves its built frontend and multiplayer endpoints from one Node process. Production clients automatically connect to the current host (WSS when the page uses HTTPS), while Vite development retains its separate server port. `render.yaml` selects a free Singapore Node service with the repository-root workspace build and `/health` check.
+
+After these changes, `npm run build` passed and all 22 Vitest checks passed. `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:production` passed both existing browser scenarios against `NODE_ENV=production`, the compiled frontend and compiled server on one port, with no Vite server and no frontend server-URL override. The Blueprint was parsed successfully as YAML. This verifies the local hosting architecture; Render-side creation, HTTPS connectivity and the assigned public URL still require deployment through the account dashboard.

@@ -16,7 +16,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "playwright test",
-    "start": "npm run start -w @pharmacy/server"
+    "start": "npm run start -w @pharmacy/server",
+    "test:production": "npm run build && playwright test --config playwright.production.config.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",
